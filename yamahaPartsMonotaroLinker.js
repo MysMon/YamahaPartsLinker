@@ -32,3 +32,11 @@ function observeTableRowChanges(table) {
         subtree: false,
     });
 }
+
+async function waitForLoadingToDisappear() {
+    const loadingElement = document.querySelector("#loading");
+
+    while (loadingElement && loadingElement.style.display !== "none") {
+        await new Promise((resolve) => setTimeout(resolve, 500));
+    }
+}
