@@ -33,6 +33,7 @@ function observeTableRowChanges(table) {
     });
 }
 
+// #loading 要素が非表示になるまで待機する関数
 async function waitForLoadingToDisappear() {
     const loadingElement = document.querySelector("#loading");
 
@@ -41,11 +42,14 @@ async function waitForLoadingToDisappear() {
     }
 }
 
+// メイン処理
 async function main() {
     const iframe = document.querySelector("#contents-frame");
 
     if (iframe) {
+        // iframeがロードされたときの処理
         iframe.addEventListener("load", async () => {
+            // #loading 要素が非表示になるまで待機
             await waitForLoadingToDisappear();
 
             const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
