@@ -21,3 +21,14 @@ function processTableRows(table) {
     const rows = table.querySelectorAll("tr");
     rows.forEach(addButtonToTableRow);
 }
+
+function observeTableRowChanges(table) {
+    const observer = new MutationObserver(() => {
+        processTableRows(table);
+    });
+
+    observer.observe(table, {
+        childList: true,
+        subtree: false,
+    });
+}
