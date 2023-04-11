@@ -1,0 +1,22 @@
+{
+    "manifest_version": 3,
+    "name": "YamahaPartsLinker",
+    "version": "1.0",
+    "description": "YAMAHAのパーツカタログでパーツ番号に対応するモノタロウへのリンクを追加します。",
+    "permissions": [
+        "activeTab"
+    ],
+    "host_permissions": [
+        "https://ypec-sss.yamaha-motor.co.jp/*"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "https://ypec-sss.yamaha-motor.co.jp/ypec/ypec/b2c/html5/app/ja/parts-search/index.html"
+            ],
+            "js": [
+                "yamahaPartsMonotaroLinker.js"
+            ]
+        }
+    ]
+}
