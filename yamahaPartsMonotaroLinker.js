@@ -16,3 +16,8 @@ function addButtonToTableRow(row) {
 
     row.setAttribute("data-button-added", "true");
 }
+
+function processTableRows(table) {
+    const rows = table.querySelectorAll("tr");
+    rows.forEach(addButtonToTableRow);
+}
