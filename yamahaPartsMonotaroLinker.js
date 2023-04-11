@@ -40,3 +40,28 @@ async function waitForLoadingToDisappear() {
         await new Promise((resolve) => setTimeout(resolve, 500));
     }
 }
+
+async function main() {
+    const iframe = document.querySelector("#contents-frame");
+
+    if (iframe) {
+        iframe.addEventListener("load", async () => {
+            await waitForLoadingToDisappear();
+
+            const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+            const tableSelector = "#list-area > div.table-body-wrap > table";
+            const table = iframeDocument.querySelector(tableSelector);
+
+            if (table) {
+                processTableRows(table);
+                observeTableRowChanges(table);
+            } else {
+                setTimeout(() => main(), 1000);
+            }
+        });
+    } else {
+        setTimeout(main, 1000);
+    }
+}
+
+main();
