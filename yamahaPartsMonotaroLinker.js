@@ -42,17 +42,21 @@ async function waitForLoadingToDisappear() {
     }
 }
 
-// メイン処理
 async function main() {
     const iframe = document.querySelector("#contents-frame");
 
-    if (iframe) {
-        // iframeがロードされたときの処理
-        iframe.addEventListener("load", async () => {
-            // #loading 要素が非表示になるまで待機
-            await waitForLoadingToDisappear();
+    if (!iframe) {
+        setTimeout(main, 1000);
+        return;
+    }
 
+    iframe.addEventListener("load", async () => {
+        const titleElement = document.querySelector("#title");
+        await waitForLoadingToDisappear();
+
+        if (titleElement && titleElement.textContent.trim() === "部品選択") {
             const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+
             const tableSelector = "#list-area > div.table-body-wrap > table";
             const table = iframeDocument.querySelector(tableSelector);
 
@@ -60,12 +64,10 @@ async function main() {
                 processTableRows(table);
                 observeTableRowChanges(table);
             } else {
-                setTimeout(() => main(), 1000);
+                setTimeout(main, 1000);
             }
-        });
-    } else {
-        setTimeout(main, 1000);
-    }
+        }
+    });
 }
 
 main();
