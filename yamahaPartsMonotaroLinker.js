@@ -42,6 +42,19 @@ async function waitForLoadingToDisappear() {
     }
 }
 
+function processPartSelection(iframe) {
+    const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+    const tableSelector = "#list-area > div.table-body-wrap > table";
+    const table = iframeDocument.querySelector(tableSelector);
+
+    if (table) {
+        processTableRows(table);
+        observeTableRowChanges(table);
+    } else {
+        setTimeout(main, 1000);
+    }
+}
+
 async function main() {
     const iframe = document.querySelector("#contents-frame");
 
@@ -55,17 +68,7 @@ async function main() {
         await waitForLoadingToDisappear();
 
         if (titleElement && titleElement.textContent.trim() === "部品選択") {
-            const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-
-            const tableSelector = "#list-area > div.table-body-wrap > table";
-            const table = iframeDocument.querySelector(tableSelector);
-
-            if (table) {
-                processTableRows(table);
-                observeTableRowChanges(table);
-            } else {
-                setTimeout(main, 1000);
-            }
+            processPartSelection(iframe);
         }
     });
 }
