@@ -1,25 +1,39 @@
-function addButtonToTableRow(row) {
+function createLink(url, text) {
+    const link = document.createElement("a");
+    link.href = url;
+    link.target = "_blank";
+    link.textContent = text;
+
+    return link;
+}
+
+function createLinkCell(url, text) {
+    const newCell = document.createElement("td");
+    const link = createLink(url, text);
+    newCell.appendChild(link);
+
+    return newCell;
+}
+
+function addButtonToTableRow(row, urlGenerator, linkText) {
     if (row.hasAttribute("data-button-added")) return;
 
     const partNo = row.getAttribute("part-no");
     if (!partNo) return;
 
-    const monotaroUrl = `https://www.monotaro.com/s/?c=&q=${encodeURIComponent(partNo)}`;
-
-    const newCell = document.createElement("td");
-    const link = document.createElement("a");
-    link.href = monotaroUrl;
-    link.target = "_blank";
-    link.textContent = "Monotaro";
-    newCell.appendChild(link);
-    row.appendChild(newCell);
+    const linkUrl = urlGenerator(partNo);
+    const linkCell = createLinkCell(linkUrl, linkText);
+    row.appendChild(linkCell);
 
     row.setAttribute("data-button-added", "true");
 }
 
 function processTableRows(table) {
     const rows = table.querySelectorAll("tr");
-    rows.forEach(addButtonToTableRow);
+    rows.forEach((row) => {
+        const monotaroUrlGenerator = (partNo) => `https://www.monotaro.com/s/?c=&q=${encodeURIComponent(partNo)}`;
+        addButtonToTableRow(row, monotaroUrlGenerator, "Monotaro");
+    });
 }
 
 function observeTableRowChanges(table) {
