@@ -2,10 +2,7 @@
     "manifest_version": 3,
     "name": "YamahaPartsLinker",
     "version": "1.0.1",
-    "description": "YAMAHAのパーツカタログでパーツ番号に対応するモノタロウへのリンクを追加します。",
-    "permissions": [
-        "activeTab"
-    ],
+    "description": "YAMAHAのパーツカタログでページの機能を拡張し、利便性を向上させます",
     "host_permissions": [
         "https://ypec-sss.yamaha-motor.co.jp/*"
     ],
