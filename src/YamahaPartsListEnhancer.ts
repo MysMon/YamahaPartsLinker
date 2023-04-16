@@ -50,7 +50,7 @@ const observeTableRowChanges = (table: HTMLTableElement): void => {
 };
 
 const waitForLoadingToDisappear = async (): Promise<void> => {
-    const loadingElement = document.querySelector("#loading");
+    const loadingElement = document.querySelector("#loading") as HTMLElement;
 
     while (loadingElement && loadingElement.style.display !== "none") {
         await new Promise((resolve) => setTimeout(resolve, 500));
@@ -58,7 +58,9 @@ const waitForLoadingToDisappear = async (): Promise<void> => {
 };
 
 const processPartSelection = (iframe: HTMLIFrameElement): void => {
-    const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+    const iframeDocument = iframe.contentDocument || iframe.contentWindow?.document;
+    if (!iframeDocument) return;
+
     const tableSelector = "#list-area > div.table-body-wrap > table";
     const table = iframeDocument.querySelector(tableSelector) as HTMLTableElement;
 
@@ -79,10 +81,10 @@ const main = async (): Promise<void> => {
     }
 
     iframe.addEventListener("load", async () => {
-        const titleElement = document.querySelector("#title") as HTMLHeadingElement;
+        const titleElement = document.querySelector("#title") as HTMLElement;
         await waitForLoadingToDisappear();
 
-        if (titleElement && titleElement.textContent.trim() === "部品選択") {
+        if (titleElement && titleElement.textContent?.trim() === "部品選択") {
             processPartSelection(iframe);
         }
     });
