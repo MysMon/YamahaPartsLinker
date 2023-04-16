@@ -17,7 +17,7 @@ const createLinkCell = (url: string, text: string): HTMLTableCellElement => {
     return newCell;
 };
 
-const addButtonToTableRow = (row: HTMLTableRowElement, urlGenerator: (partNo: string) => string, linkText: string): void => {
+const addButtonToTableRow = (row: HTMLTableRowElement, urlGenerator: UrlGenerator, linkText: string): void => {
     if (row.hasAttribute("data-button-added")) return;
 
     const partNo = row.getAttribute("part-no");
@@ -33,7 +33,7 @@ const addButtonToTableRow = (row: HTMLTableRowElement, urlGenerator: (partNo: st
 const processTableRows = (table: HTMLTableElement): void => {
     const rows = table.querySelectorAll("tr");
     rows.forEach((row) => {
-        const monotaroUrlGenerator = (partNo: string) => `https://www.monotaro.com/s/?c=&q=${encodeURIComponent(partNo)}`;
+        const monotaroUrlGenerator: UrlGenerator = (partNo) => `https://www.monotaro.com/s/?c=&q=${encodeURIComponent(partNo)}`;
         addButtonToTableRow(row as HTMLTableRowElement, monotaroUrlGenerator, "Monotaro");
     });
 };
