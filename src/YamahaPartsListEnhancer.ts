@@ -1,3 +1,5 @@
+type UrlGenerator = (partNo: string) => string;
+
 const createLink = (url: string, text: string): HTMLAnchorElement => {
     const link = document.createElement("a");
     link.href = url;
