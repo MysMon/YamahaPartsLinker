@@ -12,7 +12,7 @@
                 "https://ypec-sss.yamaha-motor.co.jp/ypec/ypec/b2c/html5/app/ja/parts-search/index.html"
             ],
             "js": [
-                "yamahaPartsMonotaroLinker.js"
+                "YamahaPartsListEnhancer.js"
             ]
         }
     ]
